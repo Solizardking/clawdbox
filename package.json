@@ -30,8 +30,9 @@
     "pump:screen": "npx tsx agents/clawd-pump-screener.ts",
     "pump:screen:top": "npx tsx agents/clawd-pump-screener.ts --top 20",
     "gateway:health": "npx tsx -e \"import {gatewayHealth,routerHealth} from './lib/clawd-gateway.js'; const [g,r] = await Promise.all([gatewayHealth(),routerHealth()]); console.log('Gateway:', g.status, '| Router:', r.status);\"",
-    "router:start": "cd ../clawdrouter && npm run dev",
-    "router:start:local": "USE_LOCAL_ROUTER=true LOCAL_ROUTER_URL=http://localhost:8402 cd ../clawdrouter && npm run dev",
+    "router:start": "cd router && npm install && npm run dev",
+    "router:deploy": "cd router && fly deploy --config fly.toml --remote-only",
+    "router:logs": "fly logs --app clawd-box-router",
     "inference:check": "npx tsx -e \"import {resolveInferenceBackend} from './lib/clawd-gateway.js'; const b=resolveInferenceBackend({}); console.log('Backend:', b.backend, '\\nURL:', b.url, '\\nModel:', b.model);\"",
     "inference:test": "npx tsx --env-file=.env scripts/test-inference.ts"
   },
